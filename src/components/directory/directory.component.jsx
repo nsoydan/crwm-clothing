@@ -2,6 +2,8 @@ import CategoryItem from '../category-item/category-item';
 import '../directory/directory.styles.scss';
 
 const Directory = ({categories})=>{
+  console.log("Directory component çalıştı");
+
     return (
     <div className='directory-container'>
       { categories.map((category)=>(
