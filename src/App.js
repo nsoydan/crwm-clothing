@@ -4,8 +4,6 @@ import {Routes,Route} from 'react-router-dom';
 import SignIn from "./routes/sign-in/sign-in.component";
 import Navigation from "./routes/navigation/navigation.component";
 
-
-
 const Shop=()=>{
 
   return(
@@ -14,8 +12,6 @@ const Shop=()=>{
     </div>
   );
 }
-
-
 
 function App() {
 
