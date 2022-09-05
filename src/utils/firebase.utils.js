@@ -4,8 +4,8 @@ import { initializeApp } from "firebase/app";
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  signInWithRedirect,
-  SignInWithPopup,
+  // signInWithRedirect,
+  // SignInWithPopup,
   GoogleAuthProvider,
   signInWithPopup,
   signInWithEmailAndPassword,
@@ -26,7 +26,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 
 const provider = new GoogleAuthProvider();
 provider.setCustomParameters({
@@ -41,14 +41,14 @@ export const db = getFirestore();
 export const createUserDocumentFromAuth = async (userAuth,additionalInformation={}) => {
   console.log(userAuth);
   console.log("createuserDocument içinde...");
-  console.log("userAuth id :", userAuth.user.uid);
-  const userDocRef = doc(db, 'users', userAuth.user.uid);
+  console.log("userAuth id :", userAuth.uid);
+  const userDocRef = doc(db, 'users', userAuth.uid);
 
   const userSnapshot = await getDoc(userDocRef);
 
   if (!userSnapshot.exists()) {
     console.log("user doesn't exist");
-    const {  displayName, email } = userAuth.user;
+    const {  displayName, email } = userAuth;
     const createdAt = new Date();
 
     try {
