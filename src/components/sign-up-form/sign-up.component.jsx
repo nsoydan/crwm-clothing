@@ -1,6 +1,5 @@
 import {useState,useContext} from "react";
-import { UserContext } from "../../context/user.context";
-import { createAuthUser, createUserDocumentFromAuth } from "../../utils/firebase.utils";
+import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from "../../utils/firebase.utils";
 import CustomButton from "../custom-button/custom-button.component";
 import FormInput from "../form-input/form-input.component";
 import './sign-up-form.styles.scss';
@@ -18,7 +17,6 @@ const SignUpForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const {displayName, email, password, confirmPassword} = formFields;
     
-    const {setCurrentUser}=useContext(UserContext);
 
     const resetFormFields=()=>{
         setFormFields(defaultFormFields);
@@ -32,11 +30,10 @@ const SignUpForm = () => {
         return; 
        }
        try {
-            const user=await createAuthUser(email,password);
-            
+            const user=await createAuthUserWithEmailAndPassword(email,password);
+            console.log("sign up ın için de displayName : :",displayName)
             await createUserDocumentFromAuth(user,{displayName});
 
-            setCurrentUser(user);    /// set currentUser as user which signed up
             resetFormFields();
        } catch (error) {
             console.log("User creation encountered an error:",error)
