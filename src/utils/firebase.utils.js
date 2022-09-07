@@ -1,4 +1,4 @@
-import { initializeApp } from 'firebase/app';
+import { initializeApp } from "firebase/app";
 import {
   getAuth,
   signInWithRedirect,
@@ -8,8 +8,8 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-} from 'firebase/auth';
-import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+} from "firebase/auth";
+import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -20,15 +20,15 @@ const firebaseConfig = {
   projectId: "crwm-clothing-44e61",
   storageBucket: "crwm-clothing-44e61.appspot.com",
   messagingSenderId: "1007415137115",
-  appId: "1:1007415137115:web:0abba19d404e36503ec07e"
+  appId: "1:1007415137115:web:0abba19d404e36503ec07e",
 };
 
-const firebaseApp = initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 
 const googleProvider = new GoogleAuthProvider();
 
 googleProvider.setCustomParameters({
-  prompt: 'select_account',
+  prompt: "select_account",
 });
 
 export const auth = getAuth();
@@ -45,28 +45,27 @@ export const createUserDocumentFromAuth = async (
 ) => {
   if (!userAuth) return;
 
-  console.log("additional Information object:",additionalInformation);
+  console.log("additional Information object:", additionalInformation);
   console.log(userAuth);
-  console.log(userAuth.user.uid);
-  const userDocRef = doc(db, 'users', userAuth.user.uid);
+  console.log(userAuth.uid);
+  const userDocRef = doc(db, "users", userAuth.uid);
 
   const userSnapshot = await getDoc(userDocRef);
 
   if (!userSnapshot.exists()) {
-    
     const { displayName, email } = userAuth;
     const createdAt = new Date();
-    console.log("display name ->",displayName)
-    
+    console.log("display name ->", displayName);
+
     try {
       await setDoc(userDocRef, {
         displayName,
         email,
         createdAt,
-        ...additionalInformation
+        ...additionalInformation,
       });
     } catch (error) {
-      console.log('error creating the user', error.message);
+      console.log("error creating the user", error.message);
     }
   }
 
