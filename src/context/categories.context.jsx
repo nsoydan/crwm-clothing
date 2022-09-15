@@ -4,7 +4,6 @@ import { getCategoriesAndDocuments } from '../utils/firebase.utils';
 
 //After send firebase,we don't need these codes
 // import SHOP_DATA from '../../src/shop-data.js';
-import { addCollectionsAndDocuments } from '../utils/firebase.utils';
 
 export const CategoriesContext = createContext({
   categories: [],

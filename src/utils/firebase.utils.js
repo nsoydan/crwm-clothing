@@ -18,7 +18,7 @@ import {
   writeBatch,   // for writing to firebase
   collection,
   query,
-  QuerySnapshot,   //for writing to firebase
+     //for writing to firebase
 } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
