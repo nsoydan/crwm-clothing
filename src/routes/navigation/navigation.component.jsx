@@ -17,7 +17,7 @@ import './navigation.styles.scss';
 const Navigation = () => {
   const { currentUser } = useContext(UserContext);
   const { isCartOpen } = useContext(CartContext);
-
+  console.log(currentUser);
   return (
     <Fragment>
       <div className='navigation'>
@@ -39,7 +39,8 @@ const Navigation = () => {
             </Link>
           )}
           <CartIcon />
-          {currentUser && <span>`{currentUser}`</span>}
+          {currentUser && <h4>{currentUser.email}</h4>
+          }
         </div>
         {isCartOpen && <CartDropdown />}
       </div>
