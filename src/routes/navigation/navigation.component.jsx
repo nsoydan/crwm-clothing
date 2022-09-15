@@ -39,6 +39,7 @@ const Navigation = () => {
             </Link>
           )}
           <CartIcon />
+          {currentUser && <span>`{currentUser}`</span>}
         </div>
         {isCartOpen && <CartDropdown />}
       </div>
