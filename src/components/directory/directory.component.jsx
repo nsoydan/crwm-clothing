@@ -2,7 +2,6 @@ import DirectoryItem from '../directory-item/directory-item';
 import '../directory/directory.styles.scss';
 
 const Directory = ({categories})=>{
-  console.log("Directory component çalıştı");
 
     return (
     <div className='directory-container'>

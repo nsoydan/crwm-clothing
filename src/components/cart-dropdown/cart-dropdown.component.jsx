@@ -1,19 +1,20 @@
 import CustomButton from "../custom-button/custom-button.component";
 import "./cart-dropdown.styles.scss";
 import CartItem from "../cart-item/cart-item.component";
-import { CartContext } from "../../context/cart.context";
-import { useContext } from "react";
 import { useNavigate} from'react-router-dom';
+import { useSelector,useDispatch } from "react-redux";
+import { selectCartItems } from "../../store/cart/cart.selector";
+import { setIsCartOpen } from "../../store/cart/cart.action";
 
 
 const CartDropdown = () => {
-    const { cartItems,setIsCartOpen } = useContext(CartContext);
-
+    const dispatch=useDispatch();
+    const cartItems=useSelector(selectCartItems);
     const navigate=useNavigate(); 
 
     const onClickHandler=()=>{
       navigate('/checkout');
-      setIsCartOpen(false)
+      dispatch(setIsCartOpen(false));
     }
   
     return (

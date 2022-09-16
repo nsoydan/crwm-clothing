@@ -15,10 +15,10 @@ import {
   getDoc,
   getDocs,
   setDoc,
-  writeBatch,   // for writing to firebase
+  writeBatch, // for writing to firebase
   collection,
   query,
-     //for writing to firebase
+  //for writing to firebase
 } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -49,7 +49,6 @@ export const signInWithGoogleRedirect = () =>
 
 export const db = getFirestore();
 
-
 // For write to firebase
 export const addCollectionsAndDocuments = async (
   collectionKey,
@@ -60,38 +59,31 @@ export const addCollectionsAndDocuments = async (
 
   objectsToAdd.forEach((object) => {
     const docRef = doc(collectionRef, object.title.toLowerCase());
-    batch.set(docRef,object);
+    batch.set(docRef, object);
   });
 
   await batch.commit();
-  //console.log("Done! Objets are set to firebase.");
 };
 
 //For get data from firebase
 
 export const getCategoriesAndDocuments = async () => {
-  const collectionRef = collection(db, 'categories');
+  const collectionRef = collection(db, "categories");
   const q = query(collectionRef);
 
   const querySnapshot = await getDocs(q);
-  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
-    const { title, items } = docSnapshot.data();
-    acc[title.toLowerCase()] = items;
-    return acc;
-  }, {});
+  return querySnapshot.docs.map(docSnapshot=>docSnapshot.data());
+  
 
-  return categoryMap;
 };
 
 export const createUserDocumentFromAuth = async (
   userAuth,
   additionalInformation = {}
 ) => {
+  
   if (!userAuth) return;
 
-  console.log("additional Information object:", additionalInformation);
-  console.log(userAuth);
-  console.log(userAuth.uid);
   const userDocRef = doc(db, "users", userAuth.uid);
 
   const userSnapshot = await getDoc(userDocRef);
@@ -99,7 +91,8 @@ export const createUserDocumentFromAuth = async (
   if (!userSnapshot.exists()) {
     const { displayName, email } = userAuth;
     const createdAt = new Date();
-    console.log("display name ->", displayName);
+
+   
 
     try {
       await setDoc(userDocRef, {

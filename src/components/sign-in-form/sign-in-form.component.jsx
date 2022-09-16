@@ -1,4 +1,4 @@
-import { useState,useContext } from "react";
+import { useState } from "react";
 import {
   signInWithGooglePopup,
   
@@ -7,7 +7,12 @@ import {
 import CustomButton from "../custom-button/custom-button.component";
 import FormInput from "../form-input/form-input.component";
 import "./sign-in-form.styles.scss";
-import { UserContext } from "../../context/user.context";
+// import { UserContext } from "../../context/user.context";
+import { setCurrentUser } from '../../store/user/user.action';
+
+import { useDispatch } from "react-redux";
+
+
 
 const defaultFormFields = {
   displayName: "",
@@ -17,20 +22,21 @@ const defaultFormFields = {
 };
 
 const SignInForm = () => {
+
+  const dispatch=useDispatch();
+
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
 
-    const {setCurrentUser} = useContext(UserContext);
+  //const {setCurrentUser} = useContext(UserContext);
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
   };
 
   const signInWithGoogle = async () => {
-    const { user } = await signInWithGooglePopup();
-    console.log("Sign in with Google user :", user);
+     await signInWithGooglePopup();
     
-   
   };
 
   const handleSubmit = async (event) => {
@@ -38,7 +44,7 @@ const SignInForm = () => {
 
     try {
       const {user} = await signInAuthUserWithEmailAndPassword(email, password);
-          setCurrentUser(user);
+          dispatch(setCurrentUser(user));
 
       resetFormFields();
     } catch (error) {
@@ -51,7 +57,6 @@ const SignInForm = () => {
           alert("User not found!!!");
           break;
         default:
-          console.log(error);
       }
     }
   };
